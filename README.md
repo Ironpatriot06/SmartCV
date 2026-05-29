@@ -1,105 +1,203 @@
 # SmartCV
 
-> AI-powered resume tailoring and optimization platform that adapts resumes to different job descriptions while preserving factual accuracy.
+> AI-powered resume tailoring, ATS optimization, and resume management platform built using Next.js, FastAPI, Google Gemini, and MongoDB Atlas.
 
 SmartCV helps users:
+
 - Upload existing resumes
-- Parse them into structured editable sections
-- Tailor resumes using AI for specific job roles
-- Export polished ATS-friendly PDFs
-- Maintain structured professional resume workflows
+- Parse resumes into structured editable sections
+- Tailor resumes for different job descriptions using AI
+- Analyze ATS compatibility
+- Export professional ATS-friendly PDFs
+- Save and manage resumes in the cloud
+- Maintain multiple resume versions for different roles
 
 ---
 
 # ✨ Features
 
-## ✅ Current Features
+## 📄 Resume Upload & Parsing
 
-### 📄 Resume Upload & Parsing
 - Upload PDF resumes
-- Extract raw text using FastAPI backend
+- Extract text using PyMuPDF
 - Parse resumes into structured sections:
-  - Summary
+  - Contact Information
+  - Professional Summary
   - Education
   - Experience
   - Projects
   - Skills
 
----
+Supports extraction of:
 
-### 🧠 Structured Resume Engine
-- Converts unstructured resume text into typed entities
-- Strongly typed architecture using:
-  - `ExperienceItem`
-  - `EducationItem`
-  - `ProjectItem`
-  - `ResumeData`
-
-Supports:
 - Company names
-- Locations
-- Durations
-- Achievement bullets
-- Technologies
-- GitHub/project links
+- Job titles
+- Education timelines
+- Project links
+- GitHub repositories
+- LinkedIn profiles
+- Technical skills
 
 ---
 
-### ✍️ Editable Resume Workspace
-Interactive resume editing UI with:
-- Dynamic section editing
-- Bullet management
-- Project technology editing
-- Structured form-based workflow
-- Live state updates
+## 🧠 Structured Resume Engine
+
+Converts unstructured resumes into strongly typed data models.
+
+Core models:
+
+- ResumeData
+- ContactInfo
+- ExperienceItem
+- EducationItem
+- ProjectItem
+
+Benefits:
+
+- Reliable editing
+- ATS analysis
+- AI tailoring
+- PDF generation
+- Version control
 
 ---
 
-### 🤖 AI Resume Tailoring
-Tailor resumes for different job descriptions using Gemini API.
+## ✍️ Interactive Resume Editor
 
 Features:
-- ATS keyword alignment
-- Professional wording improvements
-- Role-specific optimization
-- Concise bullet enhancement
-- Factuality preservation
 
-Safety constraints:
-- No hallucinated experience
-- No fake technologies
-- No fabricated companies/projects
+- Live editing
+- Dynamic sections
+- Add / Remove experiences
+- Add / Remove projects
+- Bullet management
+- Skill management
+- Real-time updates
 
 ---
 
-### 📑 Professional PDF Export
-Generate polished resume PDFs from structured data.
+## 🤖 AI Resume Tailoring
 
-Includes:
-- ATS-friendly template
-- Modern professional template
-- Multi-page support
+Powered by Google Gemini.
+
+Features:
+
+- ATS keyword alignment
+- Job-specific tailoring
+- Improved professional wording
+- Resume optimization for different roles
+- Summary enhancement
+- Experience bullet refinement
+- Project optimization
+
+Safety Constraints:
+
+- No hallucinated employers
+- No fake projects
+- No fabricated achievements
+- No invented technologies
+- Factual information preserved
+
+---
+
+## 📊 ATS Scoring Engine
+
+Analyze resumes against job descriptions.
+
+Scoring Includes:
+
+- Keyword Matching
+- JD Match Percentage
+- Missing Keywords
+- Resume Strengths
+- Resume Weaknesses
+- ATS Recommendations
+- Score Breakdown
+- Resume Health Metrics
+
+Provides actionable recommendations for improving resume quality.
+
+---
+
+## 📚 Resume Library
+
+Store resumes in MongoDB Atlas.
+
+Features:
+
+- Save resumes
+- Load resumes
+- Delete resumes
+- Persistent cloud storage
+- Resume management dashboard
+
+---
+
+## 🕒 Resume Version History
+
+Maintain multiple versions of resumes.
+
+Supports:
+
+- Original Resume
+- Tailored Resume Versions
+- ATS-Optimized Variants
+- Role-Specific Resume Copies
+
+Useful for:
+
+- AI Engineer roles
+- Backend Engineer roles
+- Data Analyst roles
+- Internship applications
+
+---
+
+## 📑 Professional PDF Export
+
+Generate polished resumes from structured data.
+
+Templates:
+
+- ATS Template
+- Professional Template
+- Modern Template
+
+Features:
+
 - A4 optimized export
+- Multi-page support
 - Print-safe rendering
+- ATS-friendly formatting
 
 ---
 
 # 🏗️ Tech Stack
 
 ## Frontend
+
 - Next.js
 - React
 - TypeScript
 - Tailwind CSS
 
 ## Backend
+
 - FastAPI
 - Python
+- Pydantic
+
+## Database
+
+- MongoDB Atlas
+- Motor (Async MongoDB Driver)
 
 ## AI
+
 - Google Gemini API
 
 ## PDF / Parsing
+
 - PyMuPDF
 - html2pdf.js
 
@@ -109,11 +207,15 @@ Includes:
 
 ```bash
 SmartCV/
+│
 ├── backend/
 │   ├── api/
+│   ├── db/
+│   ├── extractors/
 │   ├── parsers/
-│   ├── services/
 │   ├── schemas/
+│   ├── services/
+│   ├── uploads/
 │   └── main.py
 │
 ├── frontend/
@@ -127,208 +229,174 @@ SmartCV/
 └── README.md
 ```
 
-# CORE ARCHITECHTURE
-```
+---
+
+# ⚙️ Core Workflow
+
+```text
 PDF Upload
-   ↓
+    ↓
 Text Extraction
-   ↓
+    ↓
 Section Parsing
-   ↓
-Typed ResumeData Model
-   ↓
-Editable Resume Workspace
-   ↓
+    ↓
+ResumeData Model
+    ↓
+Interactive Resume Editor
+    ↓
+ATS Analysis
+    ↓
 AI Tailoring
-   ↓
+    ↓
+Resume Versioning
+    ↓
+MongoDB Storage
+    ↓
 PDF Export
 ```
 
-🚀 Getting Started
+---
 
-1. Clone Repository
-```
-git clone https://github.com/ironpatriot06/SmartCV.git
+# 🚀 Getting Started
+
+## 1. Clone Repository
+
+```bash
+git clone https://github.com/Ironpatriot06/SmartCV.git
+
 cd SmartCV
 ```
-2. Backend Setup
-```
+
+## 2. Backend Setup
+
+```bash
 cd backend
 
 python -m venv venv
 
-# macOS / Linux
+# macOS/Linux
 source venv/bin/activate
 
 # Windows
 venv\Scripts\activate
 
 pip install -r requirements.txt
+```
 
-# Create .env
-GEMINI_API_KEY=your_api_key
-# Optional: override model + request behavior
+Create `.env`
+
+```env
+GEMINI_API_KEY=your_gemini_api_key
+
 GEMINI_MODEL=gemini-2.5-flash
+
 GEMINI_TIMEOUT_SECONDS=60
+
 GEMINI_USE_REST=true
 
-#Run backend
-uvicorn main:app --reload
+MONGODB_URI=your_mongodb_connection_string
+```
 
-#Backend runs on
+Run Backend
+
+```bash
+uvicorn main:app --reload
+```
+
+Backend:
+
+```text
 http://127.0.0.1:8000
 ```
 
-3. Frontend Setup
-```
+---
+
+## 3. Frontend Setup
+
+```bash
 cd frontend
 
 npm install
+
 npm run dev
+```
 
+Frontend:
 
-# Frontend runs on
+```text
 http://localhost:3000
 ```
 
-📌 Example Workflow
+---
 
-1. Upload resume PDF
-2. Resume gets parsed into sections
-3. Edit structured fields
-4. Paste target job description
-5. AI tailors resume
-6. Export polished PDF
+# 📌 Example Workflow
 
-⸻
+1. Upload Resume PDF
+2. Parse Resume
+3. Edit Resume
+4. Paste Job Description
+5. Run ATS Analysis
+6. Tailor Resume
+7. Save Resume
+8. Create Resume Versions
+9. Export PDF
 
-🔥 Planned Features
+---
 
-📊 ATS Scoring Engine
+# 🔥 Future Roadmap
 
-* Keyword matching
-* Section scoring
-* Formatting checks
-* Role relevance analysis
-* Improvement recommendations
+## Authentication
 
-⸻
+- Google Login
+- User Profiles
+- Secure Resume Ownership
 
-🧾 Resume Versioning
+## Advanced AI Features
 
-* Resume history
-* Restore previous versions
-* AI-generated resume iterations
-* Comparison diffs
+- Cover Letter Generation
+- Resume Review Assistant
+- Career Gap Analysis
+- Interview Question Generator
+- Skill Recommendation Engine
 
-⸻
-
-👤 Authentication
-
-* Google Auth
-* Persistent resumes
-* Cloud sync
-
-⸻
-
-☁️ Database Integration
-
-Planned:
-
-* Supabase integration
-* Resume persistence
-* Version storage
-* Analytics tracking
-
-⸻
-
-📈 Analytics Dashboard
+## Analytics Dashboard
 
 Track:
 
-* Tailoring usage
-* Export counts
-* User engagement
-* Template popularity
+- ATS improvements
+- Tailoring activity
+- Resume exports
+- User engagement
 
-⸻
+## Additional Templates
 
-🎨 More Resume Templates
+Planned:
 
-Planned templates:
+- Executive
+- Minimal
+- Startup
+- Academic CV
+- Research CV
 
-* Executive
-* Compact
-* Minimal
-* Startup-style
-* Academic CV
+## Public Resume Links
 
-⸻
+- Shareable resume URLs
+- Recruiter-friendly pages
+- Portfolio mode
 
-🌐 Public Resume Links
+---
 
-Generate shareable:
+# ⚠️ Current Limitations
 
-* Portfolio-style resumes
-* Public resume pages
-* Recruiter links
+- Parsing quality depends on resume formatting
+- Multi-column PDFs may reduce extraction accuracy
+- AI tailoring quality depends on JD quality
+- Free Gemini quotas may limit requests
 
-⸻
+---
 
-🧠 Advanced AI Features
-
-Future roadmap:
-
-* AI bullet generation
-* Role gap analysis
-* Skill recommendation engine
-* Interview preparation
-* Career transition optimization
-
-⸻
-
-🎯 Design Goals
-
-SmartCV is designed to:
-
-* Keep resumes ATS-friendly
-* Preserve factual accuracy
-* Avoid AI hallucinations
-* Provide structured editing workflows
-* Support scalable resume automation
-
-⸻
-
-⚠️ Current Limitations
-
-* Parsing quality depends on resume formatting
-* AI tailoring quality depends on job description clarity
-* Complex multi-column PDFs may parse imperfectly
-* ATS scoring engine not implemented yet
-
-⸻
-
-📜 License
+# 📜 License
 
 MIT License
 
-⸻
-
-👨‍💻 Author
-
-Built by Ratish Kapoor
-
-* LinkedIn: linkedin.com/in/ratish-kapoor
-* GitHub: github.com/Ironpatriot06
-
-⸻
-
-🌟 Vision
-
-SmartCV aims to become a complete AI-powered resume operating system:
-
-* Resume optimization
-* Intelligent tailoring
-* ATS analysis
-* Career positioning
-* Professional branding
+---
