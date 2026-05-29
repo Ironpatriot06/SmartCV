@@ -57,3 +57,22 @@ export type ResumeDocument = {
   sourceFilename?: string;
   data: ResumeData;
 };
+
+export type ResumeVersion = {
+  id: string;
+  createdAt: string;
+  label: string;
+  atsScore?: number;
+  resume: ResumeData;
+};
+
+export type ResumeHistory = {
+  currentVersionId: string;
+  versions: ResumeVersion[];
+};
+
+export type ResumeDiff = {
+  section: string;
+  before: string;
+  after: string;
+};

@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import { cleanResumeData } from "@/lib/cleaning/text";
 import { buildExportFilename, exportResumePdf } from "@/lib/export/pdf";
 import type { ExportTemplateId } from "@/lib/export/types";
 import type { ResumeData } from "@/lib/types";
@@ -55,6 +56,7 @@ export function ExportButton({
   onSuccess,
 }: ExportButtonProps) {
   const [isExporting, setIsExporting] = useState(false);
+  const printData = useMemo(() => (data ? cleanResumeData(data) : null), [data]);
 
   const handleExport = async () => {
     if (!data || isExporting) return;
@@ -81,7 +83,7 @@ export function ExportButton({
 
   return (
     <>
-      {data && <ResumePrintArea data={data} templateId={templateId} />}
+      {printData && <ResumePrintArea data={printData} templateId={templateId} />}
 
       <Card
         title="Export PDF"

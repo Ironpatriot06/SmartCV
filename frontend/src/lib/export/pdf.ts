@@ -5,7 +5,7 @@ export type ExportResumePdfOptions = {
   filename: string;
 };
 
-const DEFAULT_MARGINS_MM = 10;
+const DEFAULT_MARGINS_MM: [number, number, number, number] = [10, 10, 10, 10];
 
 /**
  * Renders the hidden print container to a downloadable A4 PDF via html2pdf.js.
@@ -27,6 +27,27 @@ export async function exportResumePdf({
 #${PRINT_ROOT_ID} {
   background-color: #ffffff !important;
   color: #0f172a !important;
+  width: 190mm !important;
+  max-width: 190mm !important;
+  box-sizing: border-box !important;
+  overflow: visible !important;
+  overflow-wrap: break-word !important;
+  word-break: break-word !important;
+}
+#${PRINT_ROOT_ID} *,
+#${PRINT_ROOT_ID} *::before,
+#${PRINT_ROOT_ID} *::after {
+  box-sizing: border-box !important;
+  max-width: 100% !important;
+  overflow-wrap: break-word !important;
+  word-break: break-word !important;
+}
+#${PRINT_ROOT_ID} .print-avoid-break,
+#${PRINT_ROOT_ID} .resume-section,
+#${PRINT_ROOT_ID} .resume-item,
+#${PRINT_ROOT_ID} .resume-bullet {
+  break-inside: avoid !important;
+  page-break-inside: avoid !important;
 }
 `.trim();
 
@@ -46,12 +67,12 @@ export async function exportResumePdf({
     image: { type: "jpeg", quality: 0.98 },
     html2canvas: {
       // Higher scale improves sharpness without overly inflating PDF size.
-      scale: 2.5,
+      scale: 2,
       useCORS: true,
       letterRendering: true,
       scrollX: 0,
       scrollY: 0,
-      windowWidth: element.scrollWidth,
+      windowWidth: Math.ceil(element.scrollWidth),
       windowHeight: element.scrollHeight,
       backgroundColor: "#ffffff",
       onclone: (doc: Document) => {
@@ -67,8 +88,8 @@ export async function exportResumePdf({
       orientation: "portrait",
     },
     pagebreak: {
-      mode: ["css", "legacy", "avoid-all"],
-      avoid: ".print-avoid-break",
+      mode: ["css", "legacy"],
+      avoid: [".print-avoid-break", ".resume-section", ".resume-item", ".resume-bullet"],
     },
   };
 

@@ -32,22 +32,54 @@ export function ModernTemplate({ data }: ResumeTemplateProps) {
       className={`${PRINT_PAGE_CLASS} font-sans leading-normal`}
       style={{
         width: "100%",
-        fontSize: "10.25pt",
-        lineHeight: 1.4,
+        maxWidth: "100%",
+        fontSize: "10pt",
+        lineHeight: 1.34,
         padding: "0",
         overflow: "visible",
-        overflowWrap: "anywhere",
+        overflowWrap: "break-word",
         wordBreak: "break-word",
         color: COLORS.slate800,
       }}
     >
+      {/* Header */}
+
+<div className="mb-6 border-b pb-4">
+  <h1
+    className="text-[24pt] font-bold tracking-tight"
+    style={{ color: COLORS.slate900 }}
+  >
+    {data.contact.name}
+  </h1>
+
+  <div
+    className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-[9.5pt]"
+    style={{ color: COLORS.slate600 }}
+  >
+    {data.contact.phone && <span>{data.contact.phone}</span>}
+    {data.contact.email && <span>{data.contact.email}</span>}
+
+    {(data.contact.links ?? []).map((link) => (
+      <span key={link}>{link}</span>
+    ))}
+  </div>
+
+  {data.contact.location && (
+    <p
+      className="mt-1 text-[9pt]"
+      style={{ color: COLORS.slate500 }}
+    >
+      {data.contact.location}
+    </p>
+  )}
+</div>
       {data.summary.trim() && (
         <ResumeSection
           title="Summary"
           headingClassName={sectionHeading}
           headingStyle={{ color: COLORS.slate500 }}
         >
-          <p className="text-[11pt] leading-relaxed" style={{ color: COLORS.slate700 }}>
+          <p className="text-[10.5pt] leading-[1.45]" style={{ color: COLORS.slate700 }}>
             {data.summary.trim()}
           </p>
         </ResumeSection>
@@ -58,27 +90,27 @@ export function ModernTemplate({ data }: ResumeTemplateProps) {
           title="Experience"
           headingClassName={sectionHeading}
           headingStyle={{ color: COLORS.slate500 }}
-          className="mt-4"
+          className="mt-3.5"
         >
-          <div className="space-y-3.5">
+          <div className="space-y-3">
             {data.experience.map((item) => {
               const dates = formatDateRange(item.startDate, item.endDate);
               return (
                 <div
                   key={item.id}
-                  className="print-avoid-break border-l-2 pl-2.5"
+                  className="resume-item print-avoid-break border-l-2 pl-2.5"
                   style={{ borderColor: COLORS.indigo200 }}
                 >
-                  <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5">
+                  <div className="grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-3 gap-y-0.5">
                     <p
-                      className="text-[10.75pt] font-semibold pr-2"
+                      className="min-w-0 pr-2 text-[10.5pt] font-semibold"
                       style={{ color: COLORS.slate900 }}
                     >
                       {item.title}
                     </p>
                     {dates && (
                       <p
-                        className="text-[9.25pt] font-medium whitespace-nowrap"
+                        className="max-w-[34mm] text-right text-[9pt] font-medium leading-snug"
                         style={{ color: COLORS.slate500 }}
                       >
                         {dates}
@@ -95,7 +127,7 @@ export function ModernTemplate({ data }: ResumeTemplateProps) {
                   )}
                   <BulletList
                     items={item.bullets}
-                    className="mt-1 text-[9.75pt]"
+                    className="mt-1 text-[9.6pt]"
                     style={{ color: COLORS.slate700 }}
                   />
                 </div>
@@ -110,24 +142,24 @@ export function ModernTemplate({ data }: ResumeTemplateProps) {
           title="Education"
           headingClassName={sectionHeading}
           headingStyle={{ color: COLORS.slate500 }}
-          className="mt-4"
+          className="mt-3.5"
         >
-          <div className="space-y-3">
+          <div className="space-y-2.5">
             {data.education.map((item) => {
               const dates = formatDateRange(item.startDate, item.endDate);
               const degreeLine = joinMeta([item.degree, item.field]);
               return (
-                <div key={item.id} className="print-avoid-break">
-                  <div className="flex flex-wrap items-baseline justify-between gap-x-4">
+                <div key={item.id} className="resume-item print-avoid-break">
+                  <div className="grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-3">
                     <p
-                      className="text-[11pt] font-semibold"
+                      className="min-w-0 text-[10.5pt] font-semibold"
                       style={{ color: COLORS.slate900 }}
                     >
                       {item.institution}
                     </p>
                     {dates && (
                       <p
-                        className="text-[9.25pt] whitespace-nowrap"
+                        className="max-w-[34mm] text-right text-[9pt] leading-snug"
                         style={{ color: COLORS.slate500 }}
                       >
                         {dates}
@@ -164,17 +196,17 @@ export function ModernTemplate({ data }: ResumeTemplateProps) {
           title="Projects"
           headingClassName={sectionHeading}
           headingStyle={{ color: COLORS.slate500 }}
-          className="mt-4"
+          className="mt-3.5"
         >
-          <div className="space-y-3">
+          <div className="space-y-2.5">
             {data.projects.map((item) => (
               <div
                 key={item.id}
-                className="print-avoid-break rounded-sm px-2.5 py-2"
+                className="resume-item print-avoid-break rounded-sm px-2.5 py-1.5"
                 style={{ backgroundColor: COLORS.slate50 }}
               >
                 <p
-                  className="text-[11pt] font-semibold"
+                  className="text-[10.5pt] font-semibold"
                   style={{ color: COLORS.slate900 }}
                 >
                   {item.name}
@@ -205,7 +237,7 @@ export function ModernTemplate({ data }: ResumeTemplateProps) {
           title="Skills"
           headingClassName={sectionHeading}
           headingStyle={{ color: COLORS.slate500 }}
-          className="mt-4"
+          className="mt-3.5"
         >
           <div className="flex flex-wrap gap-1">
             {data.skills.map((skill) => (

@@ -4,7 +4,10 @@ export type {
   ExperienceItem,
   ProjectItem,
   ResumeData,
+  ResumeDiff,
+  ResumeHistory,
   ResumeDocument,
+  ResumeVersion,
 } from "./resume";
 
 export type {
@@ -13,6 +16,10 @@ export type {
   ApiProjectEntry,
   ApiResumeSections,
   ApiSkills,
+  AtsScoreRequest,
+  AtsScoreResponse,
+  KeywordMatch,
+  ScoreComponent,
   TailorRequest,
   TailorResponse,
   UploadResponse,

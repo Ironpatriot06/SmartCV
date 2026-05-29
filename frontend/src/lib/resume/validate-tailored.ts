@@ -26,6 +26,7 @@ export function mergeTailoredWithOriginal(
   ];
 
   return {
+    contact: original.contact,
     summary: tailored.summary.trim() || original.summary,
     education: original.education,
     experience: tailored.experience.map((item) => {

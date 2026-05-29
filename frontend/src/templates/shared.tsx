@@ -30,14 +30,14 @@ export function ResumeSection({
   headingStyle,
 }: SectionProps) {
   return (
-    <section className={`mb-4 last:mb-0 ${className}`}>
+    <section className={`resume-section mb-3.5 last:mb-0 ${className}`}>
       <h2
         className={`print-avoid-break ${headingClassName}`.trim()}
         style={headingStyle}
       >
         {title}
       </h2>
-      <div className="mt-5">{children}</div>
+      <div className="mt-2">{children}</div>
     </section>
   );
 }
@@ -53,16 +53,17 @@ export function BulletList({
 }) {
   if (!items.length) return null;
   return (
-    <ul className={`list-disc pl-4 space-y-1 ${className}`} style={style}>
+    <ul className={`resume-bullet-list list-disc pl-[14pt] space-y-0.5 ${className}`} style={style}>
       {items.map((item, index) => (
         <li
           key={`${index}-${item.slice(0, 24)}`}
           // Allow lists to flow across pages, but keep each bullet intact.
-          className="print-avoid-break"
+          className="resume-bullet print-avoid-break"
           style={{
-            overflowWrap: "anywhere",
+            overflowWrap: "break-word",
             wordBreak: "break-word",
             listStylePosition: "outside",
+            paddingLeft: "1pt",
           }}
         >
           {item}

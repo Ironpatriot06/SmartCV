@@ -167,6 +167,10 @@ pip install -r requirements.txt
 
 # Create .env
 GEMINI_API_KEY=your_api_key
+# Optional: override model + request behavior
+GEMINI_MODEL=gemini-2.5-flash
+GEMINI_TIMEOUT_SECONDS=60
+GEMINI_USE_REST=true
 
 #Run backend
 uvicorn main:app --reload

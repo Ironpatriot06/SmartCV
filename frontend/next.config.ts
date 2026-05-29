@@ -11,6 +11,10 @@ const nextConfig: NextConfig = {
         source: "/api/tailor",
         destination: "http://127.0.0.1:8000/tailor",
       },
+      {
+        source: "/api/ats/score",
+        destination: "http://127.0.0.1:8000/ats/score",
+      },
     ];
   },
 };

@@ -1,4 +1,4 @@
-export type ExportTemplateId = "ats" | "modern";
+export type ExportTemplateId = "ats" | "modern" | "good";
 
 export const EXPORT_TEMPLATES: {
   id: ExportTemplateId;
@@ -14,5 +14,10 @@ export const EXPORT_TEMPLATES: {
     id: "modern",
     label: "Modern",
     description: "Clean hierarchy with subtle visual polish",
+  },
+  {
+    id: "good",
+    label: "Best",
+    description: "Clean hierarchy with proper formatting",
   },
 ];

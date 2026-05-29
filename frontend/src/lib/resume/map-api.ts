@@ -148,6 +148,19 @@ function normalizeSkills(value: ApiSkills): string[] {
 
 /** Maps unstructured FastAPI section blobs into typed ResumeData. */
 export function resumeDataFromApi(sections: ApiResumeSections): ResumeData {
+  const contact = {
+
+    name: sections.contact?.name ?? "",
+  
+    email: sections.contact?.email ?? "",
+  
+    phone: sections.contact?.phone ?? "",
+  
+    location: sections.contact?.location ?? "",
+  
+    links: sections.contact?.links ?? [],
+  
+  };
   const summary = sectionText(sections.summary);
   const educationRaw = sectionText(sections.education);
   const experienceRaw = sectionText(sections.experience);
@@ -155,6 +168,7 @@ export function resumeDataFromApi(sections: ApiResumeSections): ResumeData {
   const skillsRaw = sectionText(sections.skills);
 
   return {
+    contact,
     summary,
     education: Array.isArray(sections.education)
       ? mapEducationEntries(sections.education)

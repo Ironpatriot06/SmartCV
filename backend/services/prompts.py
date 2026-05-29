@@ -18,6 +18,10 @@ STRICT RULES — you MUST follow all of these:
 - Do NOT add new bullet points unless rephrasing existing content (same count or fewer).
 - Only improve wording, clarity, ATS keyword alignment, and professionalism.
 - Preserve every factual detail; if unsure, keep the original phrasing.
+- You MAY expand existing technologies into commonly accepted terminology
+  ONLY when that terminology is already implied elsewhere in the resume.
+- You MAY use job-description keywords ONLY if they are already present in the resume
+  or are standard expansions/synonyms of existing resume terms.
 """.strip()
 
 SYSTEM_PREAMBLE = f"""{ANTI_HALLUCINATION_RULES}"""
@@ -36,6 +40,19 @@ TASK: Tailor the resume for ATS alignment with the job description.
 - DO NOT change contact info (name, email, phone, location, links), ids, company, title, dates, locations, education, project names, technologies, url, or github.
 - Keep the same number of experience and project entries.
 - Keep bullet counts the same unless merging redundant lines improves clarity.
+- Reorder bullets within a role/project so the most relevant, ATS-aligned items appear first.
+- Reorder skills by relevance to the job description; do NOT add or delete skills.
+- Prioritize terminology already present in the resume; only add ATS keywords if they are
+  directly supported by existing resume content.
+- Promote the most relevant project descriptions by emphasizing role-aligned keywords.
+- Analyze the job description for required skills, preferred skills, role type, and domain keywords.
+- Analyze the resume for matching skills, matching projects, matching experience, and transferable experience.
+- Use the analysis to rewrite the summary so the strongest matches appear first.
+- Rewrite bullets using job-description terminology ONLY when the original bullet supports it
+  or the same concept appears elsewhere in the resume.
+- Example: If the resume already mentions "retrieval-augmented generation" and "vector databases",
+  you may rewrite "Built chatbot" to "Developed RAG chatbot using vector databases" — otherwise keep it.
+- Do not output the analysis. Only output JSON.
 
 JOB DESCRIPTION:
 {job_description}
@@ -54,6 +71,7 @@ def summary_prompt(summary: str, job_description: str) -> str:
 TASK: Rewrite the professional summary below for the target role.
 - Use strong action-oriented language and ATS keywords from the job description ONLY when they truthfully reflect the candidate's background.
 - Keep 2–4 sentences. Do not add employers, years of experience, or skills not implied by the original summary.
+- You may expand existing technologies into standard terminology only when already supported by the resume.
 
 JOB DESCRIPTION:
 {job_description}
@@ -81,6 +99,7 @@ TASK: Rewrite the achievement bullets for ONE work experience entry.
 - Keep measurable impact only if already stated in the original bullets.
 - Do NOT change company name ({company}) or title ({title}) — they are context only.
 - Return the same number of bullets as the input, unless merging redundant lines improves clarity.
+- Reorder bullets to place the most relevant, ATS-aligned items first.
 
 JOB DESCRIPTION:
 {job_description}
@@ -109,6 +128,7 @@ def project_prompt(
 TASK: Improve the project description and bullets for ATS alignment.
 - Technologies ({tech_list}) and project name ({name}) are fixed — do not add or remove technologies.
 - Only rephrase description and bullets; do not invent features or outcomes.
+- Use job-description terminology only when it is supported by existing resume content.
 
 JOB DESCRIPTION:
 {job_description}

@@ -3,7 +3,7 @@ from pathlib import Path
 from fastapi import APIRouter, File, HTTPException, UploadFile
 
 from extractors import extract_resume_sections
-from parsers.pdf import extract_text
+from parsers.pdf import PdfParseError, extract_text
 
 router = APIRouter()
 
@@ -19,9 +19,20 @@ async def upload_resume(file: UploadFile = File(...)):
     if not file.filename:
         raise HTTPException(status_code=400, detail="Filename is required")
 
-    save_path = UPLOAD_DIR / file.filename
-    save_path.write_bytes(await file.read())
+    safe_filename = Path(file.filename).name.strip()
+    if not safe_filename:
+        raise HTTPException(status_code=400, detail="Filename is required")
 
-    text = extract_text(str(save_path))
+    contents = await file.read()
+    if not contents:
+        raise HTTPException(status_code=400, detail="Uploaded file is empty")
+
+    save_path = UPLOAD_DIR / safe_filename
+    save_path.write_bytes(contents)
+
+    try:
+        text = extract_text(str(save_path))
+    except PdfParseError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
     sections = extract_resume_sections(text)
-    return {"filename": file.filename, "text": text, "sections": sections}
+    return {"filename": safe_filename, "text": text, "sections": sections}

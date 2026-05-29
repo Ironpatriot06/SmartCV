@@ -52,7 +52,11 @@ def _coerce_bullets(
     if not isinstance(proposed, list):
         return original
     cleaned = [str(b).strip() for b in proposed if str(b).strip()]
-    return cleaned if cleaned else original
+    if not cleaned:
+        return original
+    if len(cleaned) > len(original):
+        return original
+    return cleaned
 
 
 def _merge_experience(

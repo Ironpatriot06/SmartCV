@@ -40,3 +40,20 @@ body {
   overflow-wrap: break-word;
   word-break: break-word;
 }
+
+#resume-print {
+  width: 190mm;
+  max-width: 190mm;
+}
+
+#resume-print .resume-section,
+#resume-print .resume-item,
+#resume-print .resume-bullet {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+#resume-print ul,
+#resume-print ol {
+  margin-block: 0;
+}

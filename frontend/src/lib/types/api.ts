@@ -2,6 +2,13 @@ import type { ResumeData } from "./resume";
 
 /** Raw payload from FastAPI upload — section bodies can be raw text or structured. */
 
+export type ApiContact = {
+  name?: string | null;
+  email?: string | null;
+  phone?: string | null;
+  location?: string | null;
+  links?: string[] | null;
+};
 export type ApiExperienceEntry = {
   company?: string | null;
   role?: string | null;
@@ -37,6 +44,7 @@ export type ApiSkills = {
 };
 
 export type ApiResumeSections = {
+  contact?: ApiContact | null;
   summary?: string | null;
   education?: string | ApiEducationEntry[] | null;
   experience?: string | ApiExperienceEntry[] | null;
@@ -58,4 +66,36 @@ export type TailorRequest = {
 
 export type TailorResponse = {
   tailoredResume: ResumeData;
+};
+
+export type KeywordMatch = {
+  keyword: string;
+  category: string;
+  count: number;
+};
+
+export type ScoreComponent = {
+  id: string;
+  label: string;
+  score: number;
+  weight: number;
+  rationale: string;
+};
+
+export type AtsScoreRequest = {
+  resume: ResumeData;
+  jobDescription: string;
+};
+
+export type AtsScoreResponse = {
+  score: number;
+  jdMatchPercentage: number;
+  healthLabel: string;
+  matchedKeywords: KeywordMatch[];
+  missingKeywords: KeywordMatch[];
+  strengths: string[];
+  weaknesses: string[];
+  recommendations: string[];
+  scoreBreakdown: ScoreComponent[];
+  metrics: Record<string, number | string>;
 };
